@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <title>Sharath H N | Software Developer - Bengaluru</title>
+    <meta name="description" content="Sharath H N Portfolio - Software Developer, Bengaluru.">
+    
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --bg-color: #0d1117;       
+            --card-bg: #161b22;        
+            --nav-bg: rgba(13, 17, 23, 0.95);
+            --text-main: #c9d1d9;      
+            --text-muted: #8b949e;     
+            
+            /* Theme Colors */
+            --accent-blue: #58a6ff;    
+            --accent-green: #3fb950;   
+            --accent-purple: #d2a8ff; 
+            --accent-orange: #f0883e; 
+            
+            /* Highlight Colors */
+            --keyword-color: #8b949e;   /* Muted Grey */
+            --highlight-hover: #c29463; /* Muted Orange */
+            
+            --border: #30363d;
+            --font-mono: 'Courier New', Courier, monospace;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-mono);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: var(--accent-blue); transition: 0.2s; cursor: pointer; }
+        a:hover { color: var(--accent-green); text-decoration: underline; }
+        ul { list-style: none; }
+
+        /* --- LAYOUT --- */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            padding-top: 20px; /* REVERTED: Back to standard padding */
+        }
+
+        section {
+            padding: 3rem 0;
+            border-bottom: 1px solid #21262d; 
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-out;
+            scroll-margin-top: 60px; 
+        }
+        section:last-child { border: none; }
+        section.visible { opacity: 1; transform: translateY(0); }
+
+        /* --- DESKTOP NAV --- */
+        nav.desktop-nav {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: var(--nav-bg); backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100; padding: 1.2rem 0;
+        }
+        .nav-content {
+            max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        
+        .logo { 
+            font-weight: bold; 
+            font-size: 1.5rem; 
+            color: var(--accent-green); 
+            letter-spacing: -1px; 
+            min-width: 150px; 
+            text-decoration: none !important; 
+            display: inline-block;
+        }
+        
+        .logo::after, .mobile-logo::after {
+            content: '_';
+            animation: blink 1s infinite;
+            color: var(--accent-blue);
+            font-weight: normal;
+        }
+
+        .nav-links a { margin-left: 20px; color: var(--text-muted); font-size: 0.95rem; }
+        .nav-links a:hover { color: var(--accent-blue); }
+
+        /* --- HERO SECTION --- */
+        .hero { 
+            /* DESKTOP FIX: Full height to allow vertical centering */
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; /* Vertically Centers Content */
+            
+            /* Shifts content slightly up to look visually balanced against the nav bar */
+            padding-bottom: 50px; 
+
+        }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 0.5rem; line-height: 1.2; }
+        
+        .subtitle { color: var(--accent-purple); font-size: 1.1rem; margin-bottom: 1rem; font-weight: bold; }
+        .hero p { font-size: 1rem; color: var(--text-muted); line-height: 1.7; max-width: 700px; }
+        
+        .location-text {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--accent-blue);
+            font-family: var(--font-sans);
+        }
+
+        .cursor {
+            display: inline-block; width: 10px; height: 1em;
+            background-color: var(--accent-blue);
+            animation: blink 1s infinite; vertical-align: text-bottom;
+        }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* --- LINKS LAYOUT (Desktop & Mobile) --- */
+        .links-container { 
+            margin-top: 2rem; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: flex-start; 
+            gap: 1.2rem;
+        }
+
+        .btn-resume {
+            display: inline-block; padding: 10px 20px;
+            border: 1px solid var(--accent-green); color: var(--accent-green);
+            border-radius: 4px; transition: 0.3s;
+            text-decoration: none !important;
+        }
+        .btn-resume:hover { background: rgba(63, 185, 80, 0.1); }
+
+        .social-group {
+            display: flex;
+            flex-direction: row; 
+            gap: 25px; 
+        }
+
+        .social-link { font-size: 1rem; font-weight: bold; color: var(--text-main); }
+
+        /* --- CARDS --- */
+        .section-title { font-size: 1.5rem; margin-bottom: 2rem; color: var(--text-main); display: flex; align-items: center; }
+        .section-title::after { content: ""; flex: 1; height: 1px; background: var(--border); margin-left: 15px; opacity: 0.5; }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            transition: transform 0.3s;
+        }
+
+        @media (min-width: 769px) {
+            .card:hover { transform: translateY(-3px); border-color: var(--accent-blue); }
+        }
+
+        .card-header { display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 0.5rem; }
+        .card h3 { color: var(--accent-blue); font-size: 1.2rem; margin-bottom: 5px; }
+        .card .date { font-size: 0.85rem; color: var(--text-muted); font-family: var(--font-sans); }
+        .card .role { display: block; color: var(--accent-green); font-size: 0.95rem; margin-bottom: 15px; font-weight: 600; }
+        
+        .card p, .card ul li { 
+            color: var(--text-muted); 
+            font-size: 0.95rem; 
+            font-family: var(--font-sans); 
+            margin-bottom: 10px;
+        }
+        
+        .card ul li { position: relative; padding-left: 1.2rem; margin-bottom: 0.8rem; }
+        .card ul li::before { content: "▹"; position: absolute; left: 0; color: var(--accent-orange); }
+
+        /* --- KEYWORD STYLING --- */
+        .card b { 
+            color: var(--keyword-color); 
+            font-weight: bold;            
+            transition: color 0.3s, text-shadow 0.3s; 
+        }
+        
+        .card p:hover b, .card ul li:hover b { 
+            color: var(--highlight-hover); 
+            text-shadow: 0 0 10px rgba(236, 231, 226, 0.24); 
+        }
+
+        /* --- SKILLS ANIMATION --- */
+        .tech-line { margin-top: 15px; font-size: 0.85rem; font-family: var(--font-mono); color: var(--text-muted); }
+        .skill-text { display: inline-block; margin-right: 15px; cursor: default; }
+
+        @keyframes pulsePurple { 0%, 100% { color: var(--text-muted); opacity: 0.7; } 50% { color: var(--accent-purple); opacity: 1; text-shadow: 0 0 8px rgba(210, 168, 255, 0.5); } }
+        @keyframes pulseBlue { 0%, 100% { color: var(--text-muted); opacity: 0.7; } 50% { color: var(--accent-blue); opacity: 1; text-shadow: 0 0 8px rgba(88, 166, 255, 0.5); } }
+        @keyframes pulseOrange { 0%, 100% { color: var(--text-muted); opacity: 0.7; } 50% { color: var(--accent-orange); opacity: 1; text-shadow: 0 0 8px rgba(240, 136, 62, 0.5); } }
+
+        .skill-text.cpp { animation: pulsePurple 5s infinite ease-in-out; }
+        .skill-text.web { animation: pulseBlue 5s infinite ease-in-out; animation-delay: 1.5s; }
+        .skill-text.tool { animation: pulseOrange 5s infinite ease-in-out; animation-delay: 3s; }
+
+        /* --- CONTACT SECTION --- */
+        .contact-box { text-align: center; max-width: 600px; margin: 0 auto; }
+        .contact-box p { font-family: var(--font-sans); color: var(--text-muted); margin-bottom: 2rem; }
+        
+        .contact-links { 
+            margin-top: 2rem; 
+            display: flex; 
+            justify-content: center; 
+            gap: 2rem; 
+            flex-wrap: wrap; 
+        }
+
+        /* --- FOOTER --- */
+        footer { text-align: center; font-size: 0.85rem; color: var(--text-muted); padding: 3rem 0; }
+
+        /* --- MOBILE SPECIFIC STYLES --- */
+        .mobile-header { display: none; }
+        .mobile-menu-overlay { display: none; }
+
+        @media (max-width: 768px) {
+            .desktop-nav { display: none; }
+            
+            /* 1. Mobile Header */
+            .mobile-header {
+                display: flex; justify-content: space-between; align-items: center;
+                position: fixed; top: 0; left: 0; width: 100%;
+                height: 60px; background: var(--nav-bg);
+                border-bottom: 1px solid #21262d; z-index: 1000;
+                padding: 0 1.5rem; backdrop-filter: blur(10px);
+            }
+            .mobile-logo { 
+                font-size: 1.4rem; font-weight: bold; color: var(--accent-green); letter-spacing: -1px;
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: opacity 0.5s ease, transform 0.5s ease;
+                min-width: 150px;
+                text-decoration: none !important;
+            }
+            .mobile-logo.visible { 
+                opacity: 1; 
+                transform: translateY(0);
+            }
+
+            .desktop-br { display: none; }
+            .hamburger { cursor: pointer; display: flex; flex-direction: column; width: 28px; gap: 6px; }
+            .line { width: 100%; height: 2px; background-color: var(--text-main); transition: 0.3s; border-radius: 2px; }
+            .hamburger.active .line:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+            .hamburger.active .line:nth-child(2) { opacity: 0; }
+            .hamburger.active .line:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+            .mobile-menu-overlay {
+                display: block; position: fixed; top: 60px; left: 0; width: 100%; height: 0;
+                background: var(--bg-color); z-index: 999; overflow: hidden; transition: 0.3s ease;
+            }
+            .mobile-menu-overlay.open { height: 100vh; padding-top: 2rem; }
+            .mobile-menu-link { display: block; text-align: center; padding: 1.2rem; font-size: 1.1rem; border-bottom: 1px solid #21262d; }
+
+            /* 2. Mobile Card Optimization */
+            .card { border-color: rgba(48, 54, 61, 0.4); padding: 1.2rem; }
+
+            /* 3. Hero Revert to Left Align */
+            .hero { align-items: flex-start; text-align: left; min-height: 85vh; /* Standard mobile height */ }
+            .hero h1 { font-size: 2.2rem; }
+            
+            /* Button adjustment for mobile */
+            .btn-resume { padding: 8px 16px; font-size: 0.9rem; }
+            
+            /* 4. Tap Interaction */
+            .card ul li:active b, .card p:active b { color: var(--highlight-hover); }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="desktop-nav">
+        <div class="nav-content">
+            <a href="#home" class="logo" id="desktopLogo" onclick="scrollToSection('home'); return false;">~/</a> 
+            <div class="nav-links">
+                <a href="#about">_about</a>
+                <a href="#experience">_experience</a>
+                <a href="#projects">_projects</a>
+                <a href="#blogs">_blogs</a>
+                <a href="#contact">_contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="mobile-header">
+        <a href="#home" class="mobile-logo" id="mobileLogo" onclick="scrollToSection('home'); return false;">~/</a>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span class="line"></span>
+            <span class="line"></span>
+            <span class="line"></span>
+        </div>
+    </div>
+
+    <div class="mobile-menu-overlay" id="mobileOverlay">
+        <a class="mobile-menu-link" href="#about" onclick="scrollToSection('about')">About</a>
+        <a class="mobile-menu-link" href="#experience" onclick="scrollToSection('experience')">Experience</a>
+        <a class="mobile-menu-link" href="#projects" onclick="scrollToSection('projects')">Projects</a>
+        <a class="mobile-menu-link" href="#blogs" onclick="scrollToSection('blogs')">Blogs</a>
+        <a class="mobile-menu-link" href="#contact" onclick="scrollToSection('contact')">Contact</a>
+        <a class="mobile-menu-link" href="https://drive.google.com/file/d/1k5KwPyd8eR7BcWxzYzhij2YvYCeIvbfK/view" target="_blank" style="color:var(--accent-green)">Resume PDF</a>
+    </div>
+
+    <div class="container">
+        <section id="home" class="hero visible">
+            <h1><span id="typewriter"></span><span class="cursor"></span></h1>
+            
+            <p class="subtitle">
+                CSE’26 | Former Intern @ Jaguar Land Rover | Systems & Simulation
+            </p>
+            <p>
+                Passionate about bridging the gap between hardware and software through 
+                high-fidelity simulation, C++ programming, intelligent automation, and software development.
+            </p>
+            
+            <p class="location-text">Bengaluru, India</p>
+
+            <br class="desktop-br">
+
+            <div class="links-container">
+                <a href="https://drive.google.com/file/d/1k5KwPyd8eR7BcWxzYzhij2YvYCeIvbfK/view" target="_blank" class="btn-resume">
+                    Download Resume
+                </a>
+              
+                <div class="social-group">
+                    <a href="https://github.com/Sharath196266" target="_blank" class="social-link">GitHub</a>
+                    <a href="https://www.linkedin.com/in/sharath7hn/" target="_blank" class="social-link">LinkedIn</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <h2 class="section-title">/* About Me */</h2>
+            <div class="card">
+                <div>
+                    <p style="margin-bottom: 1rem;">
+                        I am currently a final year student pursuing a <b>Bachelor of Engineering in Computer Science</b> at Visvesvaraya Technological University, expected to graduate in 2026. I am an aspiring software developer with a strong foundation in systems programming and full-stack development.
+                    </p>
+                    <p style="margin-bottom: 1rem;">
+                        Recently, I worked as a <b>Software Engineering Intern at Jaguar Land Rover India</b>, where I contributed to the development of a realistic virtual driver behavior simulation using <b>Unreal Engine and C++</b>.
+                    </p>
+                    <p>
+                        Beyond academics, I actively lead initiatives within student communities like <b>COMPASS GECH</b> and <b>GLUE</b> in Bengaluru and Hassan.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2 class="section-title">/* Experience */</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Jaguar Land Rover India (JLR TBSI)</h3>
+                    <span class="date">Aug 2025 – Sep 2025</span>
+                </div>
+                <span class="role">Software Engineering Intern</span>
+                <ul>
+                    <li>Built a high-fidelity <b>Unreal Engine</b> simulation with <b>MetaHumans</b> and dynamic vehicles for <b>DMS/ADAS</b> validation.</li>
+                    <li>Developed modular <b>C++ components</b>, rigged driver actions and vehicles using <b>Blender</b>.</li>
+                    <li>Automated MetaHuman behaviors via montages using a <b>Python/UDP system</b>.</li>
+                    <li>Integrated radar/camera sensors and implemented pedestrian logic using a <b>Python/C++ UDP system</b>.</li>
+                    <li>Optimized MetaHumans, vehicle assets, and materials, improving <b>FPS, scalability</b>, and reliability.</li>
+                </ul>
+                <div class="tech-line">
+                    <span class="skill-text cpp">C++</span>
+                    <span class="skill-text cpp">Unreal Engine 5</span>
+                    <span class="skill-text tool">Python/UDP</span>
+                    <span class="skill-text tool">Blender</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Govt Engineering College Hassan</h3>
+                    <span class="date">Mar 2025 – Present</span>
+                </div>
+                <span class="role">Session Handler & Secretary</span>
+                <ul>
+                    <li>Conducted technical sessions on <b>Linux</b>, programming, and <b>open-source tools</b>.</li>
+                    <li>Organized <b>hackathons</b>, workshops, and departmental events to foster a coding culture.</li>
+                </ul>
+                <div class="tech-line">
+                    <span class="skill-text tool">Linux</span>
+                    <span class="skill-text web">Public Speaking</span>
+                    <span class="skill-text web">Management</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2 class="section-title">/* Projects */</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>KrushiBook App</h3>
+                    <a href="https://github.com/Sharath196266/KrushiBook.git" target="_blank" style="font-size:0.8rem">View Repo</a>
+                </div>
+                <p>Cross-platform app for farmers integrating social media, e-commerce, and agricultural assistance.</p>
+                <ul>
+                    <li>Built with <b>React Native + Expo</b> for cross-platform mobile compatibility.</li>
+                    <li>Backend powered by <b>Node.js + Supabase</b> for secure authentication.</li>
+                    <li>Integrated a <b>Gemini API chatbot</b> for instant agricultural queries.</li>
+                </ul>
+                <div class="tech-line">
+                    <span class="skill-text web">React Native</span>
+                    <span class="skill-text web">Supabase</span>
+                    <span class="skill-text web">Node.js</span>
+                    <span class="skill-text tool">AI Integration</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Automated Content Generator</h3>
+                    <a href="https://github.com/Sharath196266/Automated-Content-Generator.git" target="_blank" style="font-size:0.8rem">View Repo</a>
+                </div>
+                <p>AI-powered platform for generating posters, brochures, and business content.</p>
+                <ul>
+                    <li>Automated the design process using <b>Python</b>, allowing for custom dimensions.</li>
+                    <li>Significantly reduced time-to-market using <b>Automation</b>.</li>
+                </ul>
+                <div class="tech-line">
+                    <span class="skill-text tool">Python</span>
+                    <span class="skill-text tool">Automation</span>
+                    <span class="skill-text tool">Scripting</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <h2 class="section-title">/* Skills Overview */</h2>
+            <div class="card" style="border:none; background: transparent; padding-left: 0;">
+                <div style="font-family: var(--font-mono); font-size: 0.9rem; line-height: 2;">
+                    <div><span style="color: var(--accent-green)">Langs:</span> <span class="skill-text cpp">C++</span> <span class="skill-text tool">Python</span> <span class="skill-text web">JavaScript</span></div>
+                    <div><span style="color: var(--accent-green)">Core:</span> <span class="skill-text cpp">Unreal Engine</span> <span class="skill-text web">React Native</span> <span class="skill-text web">Expo</span></div>
+                    <div><span style="color: var(--accent-green)">Tools:</span> <span class="skill-text tool">Git</span> <span class="skill-text tool">Blender</span> <span class="skill-text tool">VS Code</span> <span class="skill-text tool">Linux</span></div>
+                    <div><span style="color: var(--accent-green)">DB:</span> <span class="skill-text web">PostgreSQL</span> <span class="skill-text web">MySQL</span> <span class="skill-text web">Supabase</span></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="blogs">
+            <h2 class="section-title">/* Blogs */</h2>
+            <div class="card" style="border-left: 3px solid var(--accent-orange); opacity: 0.8;">
+                <p style="padding-left: 10px; font-style: italic;">
+                    Technical blogs on Simulation and Systems are coming soon...
+                </p>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2 class="section-title">/* Contact */</h2>
+            <div class="contact-box">
+                <p>
+                    I am currently looking for full-time opportunities in Software Development, Simulation Engineering, or AI. 
+                    Whether you have a question about my research or just want to say hi, my inbox is always open!
+                </p>
+                <a href="mailto:sharath7hn@gmail.com" class="btn-resume" style="font-size: 1.1rem; padding: 12px 28px;">Say Hello</a>
+                
+                <div class="contact-links">
+                    <a href="https://github.com/Sharath196266" target="_blank">github.com/Sharath196266</a>
+                    <a href="https://www.linkedin.com/in/sharath7hn/" target="_blank">linkedin.com/in/sharath7hn</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 All rights reserved to sharath</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- 1. CONFIGURATION & STATE ---
+        const logoText = "Sharath_H_N";
+        const titleText = "Hello, I'm Sharath H N.";
+        
+        const desktopLogo = document.getElementById('desktopLogo');
+        const mobileLogo = document.getElementById('mobileLogo');
+        const titleElement = document.getElementById('typewriter');
+        
+        let desktopInterval = null;
+        let mobileInterval = null;
+        let titleInterval = null;
+        
+        // State trackers to prevent infinite looping at top
+        let isDesktopTyped = false;
+        let isTitleTyped = false; 
+
+        // --- 2. TYPING FUNCTIONS ---
+
+        // Generic Typer
+        function animateText(element, text, intervalVar, callbackSetInterval) {
+            element.innerHTML = ""; // Clear
+            let j = 0;
+            
+            // Clear previous interval if running
+            if (intervalVar) clearInterval(intervalVar);
+            
+            // Special handling for logo to show `~/` initially then type
+            if(element === desktopLogo || element === mobileLogo) {
+               element.innerHTML = "~/";
+            }
+
+            const newInterval = setInterval(() => {
+                if (j < text.length) {
+                    element.innerHTML += text.charAt(j);
+                    j++;
+                } else {
+                    clearInterval(newInterval);
+                }
+            }, 80); // Speed
+            
+            callbackSetInterval(newInterval);
+        }
+
+        function runTitleAnimation() {
+            animateText(titleElement, titleText, titleInterval, (id) => { titleInterval = id; });
+        }
+        
+        function runDesktopLogoAnimation() {
+            animateText(desktopLogo, logoText, desktopInterval, (id) => { desktopInterval = id; });
+        }
+
+        function runMobileLogoAnimation() {
+            animateText(mobileLogo, logoText, mobileInterval, (id) => { mobileInterval = id; });
+        }
+
+        // --- 3. INIT & SCROLL LOGIC ---
+        
+        window.onload = function() {
+            // Run animations immediately on load
+            runTitleAnimation();
+            runDesktopLogoAnimation();
+            
+            // Mark as typed
+            isTitleTyped = true;
+            isDesktopTyped = true;
+        };
+
+        // Scroll Observer for Sections fade-in
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Navigation Functions
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+            document.querySelector('.hamburger').classList.remove('active');
+            document.getElementById('mobileOverlay').classList.remove('open');
+        }
+
+        function toggleMenu() {
+            document.querySelector('.hamburger').classList.toggle('active');
+            document.getElementById('mobileOverlay').classList.toggle('open');
+        }
+
+        // --- INTELLIGENT SCROLL LISTENER ---
+        window.addEventListener('scroll', function() {
+            const currentScrollY = window.scrollY;
+            const heroSection = document.getElementById('home');
+            const heroBottom = heroSection ? heroSection.getBoundingClientRect().bottom : 0;
+
+            // --- A. RE-TYPE TRIGGER (HOME/DESKTOP LOGO) ---
+            if (currentScrollY === 0) {
+                if (!isTitleTyped) {
+                    runTitleAnimation();
+                    isTitleTyped = true;
+                }
+                if (!isDesktopTyped) {
+                    runDesktopLogoAnimation();
+                    isDesktopTyped = true;
+                }
+            } 
+            // --- B. RESET TRIGGER ---
+            else if (currentScrollY > 300) {
+                isTitleTyped = false;
+                isDesktopTyped = false;
+            }
+
+            // --- C. MOBILE LOGO LOGIC ---
+            if (heroBottom < 50) { 
+                if (!mobileLogo.classList.contains('visible')) {
+                    mobileLogo.classList.add('visible');
+                    runMobileLogoAnimation();
+                }
+            } else {
+                if (mobileLogo.classList.contains('visible')) {
+                    mobileLogo.classList.remove('visible');
+                    mobileLogo.innerHTML = "~/"; 
+                    if(mobileInterval) clearInterval(mobileInterval);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
