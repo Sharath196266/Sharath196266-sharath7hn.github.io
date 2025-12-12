@@ -501,6 +501,15 @@
 
         // --- 2. TYPING FUNCTIONS ---
 
+        if (history.scrollRestoration) {
+            history.scrollRestoration = 'manual';
+        }
+        if (window.location.hash) {
+            history.replaceState(null, null, window.location.pathname);
+        }
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        };
         // Generic Typer
         function animateText(element, text, intervalVar, callbackSetInterval) {
             element.innerHTML = ""; // Clear
@@ -544,6 +553,8 @@
             // Run animations immediately on load
             runTitleAnimation();
             runDesktopLogoAnimation();
+
+            window.scrollTo(0, 0);
             
             // Mark as typed
             isTitleTyped = true;
